@@ -4,6 +4,9 @@ import pickle
 import os
 import time
 
+def c_c():
+    showItem(v='', d1='y', d2='n')
+
 def a_a():
     os.system('cls' if os.name=='nt' else 'clear' )
 
@@ -39,7 +42,7 @@ def showStock(d: list, e='currentstock.csv'):
             showItem(i)
             if d != '':
                 d.append(i)
-        showItem(v='', d1='y', d2='n')
+        c_c()
     if d != '':
         return d
 
@@ -53,9 +56,9 @@ def passwordInput():
 
 
 def SalerLogin():
-    showItem(v='', d1='y', d2='n')
+    c_c()
     Title()
-    showItem(v='', d1='y', d2='n')
+    c_c()
     b = passwordInput()
     c = open('Passwords.dat', 'rb')
     d = pickle.load(c)
@@ -73,10 +76,10 @@ def SalerLogin():
 
 
 def show(x):
-    showItem(v='', d1='y', d2='n')
+    c_c()
     for i in x:
         print("|{:<64}|".format(i))
-    showItem(v='', d1='y', d2='n')
+    c_c()
 
 
 def logOut():
@@ -130,7 +133,7 @@ def updateStock(d='y'):
         for i in editing_list:
             if i[2] == up_no:
                 showItem(i)
-                showItem(v='', d1='y', d2='n')
+                c_c()
                 a_1 = input('Enter quantity :->')
                 a_2 = input('Enter the price :->')
                 if a_1 == '':
@@ -138,7 +141,7 @@ def updateStock(d='y'):
                 if a_2 == '':
                     a_2 = i[4]
                 showItem([i[0], i[1], i[2], a_1, a_2])
-                showItem(v='', d1='y', d2='n')
+                c_c()
                 while (d_1 := str(input('Are you confirmed(y or n) ? :->')).lower()) == '':
                     pass
                 if d_1 == 'y':
@@ -176,7 +179,7 @@ def addItemStock(d='y'):
                 pass
         l1 = [str(c + 1), n_1, str(int(f) + 1), n_2, n_3]
         showItem(l1)
-        showItem(v='', d1='y', d2='n')
+        c_c()
         while (d_1 := str(input('Are you confirmed(y or n) ? :->')).lower()) == '':
             pass
         if d_1 == 'y':
@@ -199,7 +202,7 @@ def removeItemStock(d='y'):
         for i in editing_list:
             if i[2] == n_1:
                 showItem(i)
-                showItem(v='', d1='y', d2='n')
+                c_c()
                 while (n_2 := str(input('Are you confirmed to delete record(y or n) ? :->')).lower()) == '':
                     pass
                 c = 0
@@ -228,11 +231,11 @@ def removeItemStock(d='y'):
 
 
 def Customer(d='y'):
-    showItem(v='', d1='y', d2='n')
+    c_c()
     Title()
-    showItem(v='', d1='y', d2='n')
+    c_c()
     print('\nNote: Use only the Item number in for finding suitable item.\n')
-    showItem(v='', d1='y', d2='n')
+    c_c()
     editing_list2 = []
     editing_list = showStock(None)
     editing_list2.append(['Sr no.', 'Item Name', 'Item no.', 'Quantity', 'Price'])
@@ -252,7 +255,7 @@ def Customer(d='y'):
         for i in editing_list:
             if i[2] == n_1:
                 showItem(i)
-                showItem(v='', d1='y', d2='n')
+                c_c()
                 while (n_1 := str(input("Enter the total number quantity which you want to buy :->"))) == '':
                     pass
                 while (n_2 := str(input("Are you confirmed to buy (y or n) ? :->")).lower()) == '':
@@ -280,10 +283,10 @@ def Customer(d='y'):
         if i[0] != 'Sr no.':
             vc = vc + int(i[3])
             xb = xb + int(i[4])
-    showItem(v='', d1='y', d2='n')
+    c_c()
     print('| {:<14}: {:<5} | {:<11} : {:>7} {:<3}{:<14}|'.format('Total quantity', vc, 'Total Price', xb, 'Rs.',
                                                                  ' ' * 14))
-    showItem(v='', d1='y', d2='n')
+    c_c()
     del editing_list
     del editing_list2
     input('Press any key to go to main menu :->')
@@ -291,7 +294,7 @@ def Customer(d='y'):
 
 
 def Saler():
-    showItem(v='', d1='y', d2='n')
+    c_c()
     Title()
     show([' Welcome back here...', ' Now you can modify your stocks...'])
     choice_dict = {
@@ -319,9 +322,9 @@ def Saler():
             print()
             a_a()
             if schoice!='5':
-                showItem(v='', d1='y', d2='n')
+                c_c()
                 Title()
-                showItem(v='', d1='y', d2='n')
+                c_c()
             choice_dict[schoice]()
             if schoice != '6':
                 tuckshopManagementSystem(a='1' , b='successLogin')
@@ -337,9 +340,9 @@ def login():
         '  2  | Press-2 | Login as Customer  :',
         '  3  | Press-3 | Exit Program       :'
     ]
-    showItem(v='', d1='y', d2='n')
+    c_c()
     Title()
-    showItem(v='', d1='y', d2='n')
+    c_c()
     show(m1)
     while (a := input(':->').strip()) == '':
         if a not in (x[2] for x in m1):
@@ -365,9 +368,9 @@ def tuckshopManagementSystem(a=0, b=0):
         if m=='a':
             tuckshopManagementSystem()
     elif a == '3':
-        showItem(v='', d1='y', d2='n')
+        c_c()
         Title(' Please Visit Again ')
-        showItem(v='', d1='y', d2='n')
+        c_c()
         time.sleep(3)
     if b == 'successLogin':
         a_a()
