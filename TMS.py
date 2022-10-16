@@ -1,15 +1,19 @@
 import csv
 import getpass
 import pickle
+import os
+import time
 
+def a_a():
+    os.system('cls' if os.name=='nt' else 'clear' )
 
-def Title():
-    print('|{:^64}|'.format('Tuckshop management system').title())
+def Title(text=" Tuckshop management system "):
+    print('| {:=^62} |'.format(text).title())
 
 
 def showItem(v='', d1='y', d2='y'):
     if d1 == 'y':
-        print('+' + '=' * 64 + '+')
+        print('+' + '-' * 64 + '+')
     if d2 == 'y':
         print('| {:<10}| {:<15}| {:<10}| {:<10}| {:<10}'.format(v[0], v[1].title(), v[2], v[3], v[4]), end='|\n')
 
@@ -49,6 +53,9 @@ def passwordInput():
 
 
 def SalerLogin():
+    showItem(v='', d1='y', d2='n')
+    Title()
+    showItem(v='', d1='y', d2='n')
     b = passwordInput()
     c = open('Passwords.dat', 'rb')
     d = pickle.load(c)
@@ -59,7 +66,7 @@ def SalerLogin():
         else:
             try:
                 d = pickle.load(c)
-            except any(Exception):
+            except:
                 print('Incorrect Password ! Please enter a valid password of Manager.')
                 c.seek(0)
                 b = passwordInput()
@@ -73,9 +80,10 @@ def show(x):
 
 
 def logOut():
-    hl = ['Thank you for login inside the Tuckshop Management System...',
-          'Please login regularly to check the stock management...']
+    hl = [' Thank you for login inside the Tuckshop Management System...',
+          ' Please login regularly to check the stock management...']
     show(hl)
+    time.sleep(1)
     tuckshopManagementSystem()
 
 
@@ -100,9 +108,11 @@ def changePassword():
                 print("Seller password successfully changed.")
             print()
             input('Press any key to go to main menu :->')
+            a_a
         else:
             print("Your entered password and re-entered password did not match.")
             print("Please enter new password and confirm password again...")
+            a_a()
             changePassword()
 
 
@@ -137,6 +147,7 @@ def updateStock(d='y'):
                 while (d := input('Do you want to enter more(y or n) :->').lower()) == '':
                     pass
     changeStock(editing_list)
+    a_a()
     showStock(None)
     input('Press any key to go to main menu :->')
     print()
@@ -173,6 +184,7 @@ def addItemStock(d='y'):
         while (d := input('Do you want to enter more(y or n) :->').lower()) == '':
             pass
     changeStock(editing_list)
+    a_a()
     showStock(None)
     input('Press any key to go to main menu :->')
     del editing_list
@@ -208,7 +220,7 @@ def removeItemStock(d='y'):
                 while (d := str(input('Do you want to enter more(y or n) ? :->')).lower()) == '':
                     pass
     changeStock(editing_list)
-    print()
+    a_a()
     showStock(None)
     input('Press any key to go to main menu :->')
     print()
@@ -224,12 +236,19 @@ def Customer(d='y'):
     editing_list2 = []
     editing_list = showStock(None)
     editing_list2.append(['Sr no.', 'Item Name', 'Item no.', 'Quantity', 'Price'])
-    while (xn := input('Enter your Customer name :->')) == '':
-        print('Please enter Customer name of 10 letters :->')
-    while d != 'n':
-        n_1 = str(input('Enter item number or enter exit to exit  :->'))
-        if n_1 in ('exit', 'EXIT', 'Exit'):
+    while (xn := input('Enter your Customer name or enter exit to exit :->')) != '':
+        if xn in ('exit', 'EXIT', 'Exit'):
             return 'a'
+        else:
+            break
+    else:
+        print('Please enter Customer name of 10 letters :->')
+        time.sleep(1)
+        a_a()
+        a=Customer()
+        return a
+    while d != 'n':
+        n_1 = str(input('Enter item number :->'))
         for i in editing_list:
             if i[2] == n_1:
                 showItem(i)
@@ -252,6 +271,7 @@ def Customer(d='y'):
                 while (d := str(input("Do you want to enter more (y or n) ? :->")).lower()) == '':
                     pass
     changeStock(editing_list)
+    a_a()
     vc = xb = 0
     show(['Your purchased items are given below :'])
     print('|{:<13} : {:<10}{:<38}|'.format('Customer name', xn, ' ' * 38))
@@ -271,6 +291,9 @@ def Customer(d='y'):
 
 
 def Saler():
+    showItem(v='', d1='y', d2='n')
+    Title()
+    show([' Welcome back here...', ' Now you can modify your stocks...'])
     choice_dict = {
         '1': currentStock,
         '2': updateStock,
@@ -280,56 +303,74 @@ def Saler():
         '6': logOut
     }
     m = [
-        'Press-1 to see the current stock...',
-        'Press-2 to update the stock...',
-        'Press-3 to add new items to stock...',
-        'Press-4 to remove items from stock...',
-        'Press-5 to change Seller password...',
-        'Press-6 to Logout...'
+        '  1  | Press-1 | See the current stock    :',
+        '  2  | Press-2 | Update the stock         :',
+        '  3  | Press-3 | Add new items to stock   :',
+        '  4  | Press-4 | Remove items from stock  :',
+        '  5  | Press-5 | Change Seller password   :',
+        '  6  | Press-6 | Logout                   :'
     ]
     show(m)
     while (schoice := input(':->').strip()) == '':
         if schoice not in choice_dict.keys():
             pass
-    print()
-    choice_dict[schoice]()
-    if schoice != '6':
-        tuckshopManagementSystem(a='1', b='successLogin')
+    else:
+        if schoice in choice_dict.keys():
+            print()
+            a_a()
+            if schoice!='5':
+                showItem(v='', d1='y', d2='n')
+                Title()
+                showItem(v='', d1='y', d2='n')
+            choice_dict[schoice]()
+            if schoice != '6':
+                tuckshopManagementSystem(a='1' , b='successLogin')
+        else:
+            a_a()
+            Saler()
 
 
 def login():
+    a_a()
     m1 = [
-        'Press-1 to login as Seller:',
-        'Press-2 to login as Customer:',
-        'Press-3 to exit:'
+        '  1  | Press-1 | Login as Seller    :',
+        '  2  | Press-2 | Login as Customer  :',
+        '  3  | Press-3 | Exit Program       :'
     ]
     showItem(v='', d1='y', d2='n')
     Title()
+    showItem(v='', d1='y', d2='n')
     show(m1)
-    while (a := input(':->').strip()) != '':
-        if a in ('1', '2', '3'):
-            return a
+    while (a := input(':->').strip()) == '':
+        if a not in (x[2] for x in m1):
+            pass
+    else:
+        if a not in (x[2] for x in m1):
+            a_a()
+            a=login()
+        if a!='3':
+            a_a()
+        return a
 
 
 def tuckshopManagementSystem(a=0, b=0):
     if a == 0:
-        print()
         a = login()
     if a == '1':
-        print()
         print('Welcome')
         if b != 'successLogin':
             b = SalerLogin()
     elif a == '2':
-        Customer()
+        m=Customer()
+        if m=='a':
+            tuckshopManagementSystem()
     elif a == '3':
-        show([' ' * 23 + 'Please Visit Again' + ' ' * 23])
-        input('')
-    if b == 'successLogin':
-        print()
         showItem(v='', d1='y', d2='n')
-        Title()
-        show(['Welcome back here..', 'Now you can modify your stocks...'])
+        Title(' Please Visit Again ')
+        showItem(v='', d1='y', d2='n')
+        time.sleep(3)
+    if b == 'successLogin':
+        a_a()
         Saler()
 
 
